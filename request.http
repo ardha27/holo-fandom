@@ -1,0 +1,1 @@
+GET http://localhost/wpu-rest-server/api/mahasiswa?id=5
