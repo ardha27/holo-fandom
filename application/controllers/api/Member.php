@@ -6,12 +6,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
 
-class Mahasiswa extends REST_Controller
+class Member extends REST_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Mahasiswa_model', 'mahasiswa');
+        $this->load->model('Member_model', 'member');
 
         $this->methods['index_get']['limit'] = 1000;
     }
@@ -19,15 +19,15 @@ class Mahasiswa extends REST_Controller
     {
         $id = $this->get('id');
         if ($id === NULL) {
-            $mahasiswa = $this->mahasiswa->getMahasiswa();
+            $member = $this->member->getmember();
         } else {
-            $mahasiswa = $this->mahasiswa->getMahasiswa($id);
+            $member = $this->member->getmember($id);
         }
 
-        if ($mahasiswa) {
+        if ($member) {
             $this->response([
                 'status' => true,
-                'data' => $mahasiswa
+                'data' => $member
             ], REST_Controller::HTTP_OK);
         } else {
             $this->response([
@@ -46,7 +46,7 @@ class Mahasiswa extends REST_Controller
                 'message' => 'provide an id'
             ], REST_Controller::HTTP_BAD_REQUEST);
         } else {
-            if ($this->mahasiswa->deleteMahasiswa($id) >0 ) {
+            if ($this->member->deletemember($id) >0 ) {
                 $this->response([
                     'status' => true,
                     'id' => $id,
@@ -63,13 +63,17 @@ class Mahasiswa extends REST_Controller
 
     public function index_post() {
         $data = [
-            'nrp' => $this->post('nrp'),
-            'nama' => $this->post('nama'),
-            'email' => $this->post('email'),
-            'jurusan' => $this->post('jurusan')
+            'name' => $this->post('name'),
+            'gen' => $this->post('gen'),
+            'debut_date' => $this->post('debut_date'),
+            'debut_video' => $this->post('debut_video'),
+            'yt_channel' => $this->post('yt_channel'),
+            'twitter' => $this->post('twitter'),
+            'mama' => $this->post('mama'),
+            'papa' => $this->post('papa')
         ];
 
-        if ($this->mahasiswa->createMahasiswa($data) > 0) {
+        if ($this->member->createmember($data) > 0) {
             $this->response([
                 'status' => true,
                 'message' => 'new data created.'
@@ -85,13 +89,17 @@ class Mahasiswa extends REST_Controller
     public function index_put() {
         $id = $this->put('id');
         $data = [
-            'nrp' => $this->put('nrp'),
-            'nama' => $this->put('nama'),
-            'email' => $this->put('email'),
-            'jurusan' => $this->put('jurusan')
+            'name' => $this->put('name'),
+            'gen' => $this->put('gen'),
+            'debut_date' => $this->put('debut_date'),
+            'debut_video' => $this->put('debut_video'),
+            'yt_channel' => $this->put('yt_channel'),
+            'twitter' => $this->put('twitter'),
+            'mama' => $this->put('mama'),
+            'papa' => $this->put('papa')
         ];
 
-        if ($this->mahasiswa->updateMahasiswa($data, $id) > 0) {
+        if ($this->member->updatemember($data, $id) > 0) {
             $this->response([
                 'status' => true,
                 'message' => 'data updated.'
